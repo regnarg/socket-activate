@@ -13,7 +13,7 @@ import (
 )
 
 var (
-	mode               = flag.String("m", "tcp", "mode, available: tcp")
+	mode               = flag.String("m", "tcp", "mode, available: tcp, unix")
 	targetUnit         = flag.String("u", "null.service", "corresponding unit")
 	destinationAddress = flag.String("a", "127.0.0.1:80", "destination address")
 	timeout            = flag.Duration("t", 0, "inactivity timeout after which to stop the unit again")
@@ -94,7 +94,7 @@ func startTCPProxy(activityMonitor chan<- bool) {
 		var connBackend net.Conn
 		tryCount := 0
 		for tryCount < 10 {
-			connBackend, err = net.Dial("tcp", *destinationAddress)
+			connBackend, err = net.Dial(*mode, *destinationAddress)
 			if err != nil {
 				fmt.Println(err)
 				time.Sleep(100 * time.Millisecond)
