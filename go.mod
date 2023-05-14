@@ -1,4 +1,4 @@
-module github.com/cherti/socket-activate
+module github.com/regnarg/socket-activate
 
 go 1.14
 
